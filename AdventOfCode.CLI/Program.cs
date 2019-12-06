@@ -10,7 +10,7 @@ namespace AdventOfCode
         [STAThread]
         static void Main()
         {
-            /**/
+            /** /
             ProblemFactory.Create<Day1A>()
                 .SendToClipboard()
                 .AppendTime()
@@ -73,10 +73,6 @@ namespace AdventOfCode
 
             // */
 
-
-            /** /
-
-
       ProblemFactory.Create<Day6A>()
           .SendToClipboard()
           .AppendTime()
@@ -88,6 +84,7 @@ namespace AdventOfCode
           .AppendTime()
           .Solve()
           .ToConsole("Day 6B");
+            /** /
 
       ProblemFactory.Create<Day7A>()
           .SendToClipboard()
