@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Amplifier.cs" />
     <Compile Include="Coordinates\AxialHexCoordinate.cs" />
     <Compile Include="Coordinates\CubeHexCoordinate.cs" />
     <Compile Include="Days\Day01A.cs" />

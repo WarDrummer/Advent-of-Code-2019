@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AdventOfCode.Solutions.Days
+﻿namespace AdventOfCode.Solutions.Days
 {
     public class Day12B : Day12A
     {

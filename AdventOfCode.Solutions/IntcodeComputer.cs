@@ -15,7 +15,7 @@ namespace AdventOfCode.Solutions
         private const int EQUALS = 8;
         private const int HALT = 99;
 
-        public static int Compute(List<int> program, int input = 1)
+        public static int Compute(List<int> program, int input = 1, int? phase = null)
         {
             var output = 0;
             var ip = 0;
@@ -24,7 +24,7 @@ namespace AdventOfCode.Solutions
 
             while (!halted)
             {
-                //Console.WriteLine($"Executing IP={ip}, OpCode={program[ip]}");
+               // Console.WriteLine($"Executing IP={ip}, OpCode={program[ip]}");
                 var opcode = program[ip] % 100;
 
                 switch (opcode)
@@ -40,7 +40,13 @@ namespace AdventOfCode.Solutions
                         ip += 4;
                         break;
                     case INPUT:
-                        program[program[ip + 1]] = input;
+                        if (phase != null)
+                        {
+                            program[program[ip + 1]] = phase.Value;
+                            phase = null;
+                        }
+                        else
+                            program[program[ip + 1]] = input;
                         ip += 2;
                         break;
                     case OUTPUT:

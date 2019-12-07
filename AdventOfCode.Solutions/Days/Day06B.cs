@@ -1,6 +1,5 @@
 ﻿using AdventOfCode.Solutions.Parsers;
 using AdventOfCode.Solutions.Problem;
-using System;
 using System.Collections.Generic;
 
 namespace AdventOfCode.Solutions.Days
