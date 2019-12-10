@@ -10,7 +10,7 @@ namespace AdventOfCode
         [STAThread]
         static void Main()
         {
-            /**/
+            /** /
             ProblemFactory.Create<Day1A>()
                 .SendToClipboard()
                 .AppendTime()
@@ -83,6 +83,7 @@ namespace AdventOfCode
                 .Solve()
                 .ToConsole("Day 6B");
 
+
             ProblemFactory.Create<Day7A>()
                 .SendToClipboard()
                 .AppendTime()
@@ -95,29 +96,26 @@ namespace AdventOfCode
           .Solve()
           .ToConsole("Day 7B");
 
-            // */
+
+            ProblemFactory.Create<Day8A>()
+                .SendToClipboard()
+                .AppendTime()
+                .Solve()
+                .ToConsole("Day 8A");
+
+            ProblemFactory.Create<Day8B>()
+                .SendToClipboard()
+                .AppendTime()
+                .Solve()
+                .ToConsole("Day 8B");
 
 
-            /** /
-
-
-      ProblemFactory.Create<Day8A>()
-          .SendToClipboard()
-          .AppendTime()
-          .Solve()
-          .ToConsole("Day 8A");
-     
-      ProblemFactory.Create<Day8B>()
-          .SendToClipboard()
-          .AppendTime()
-          .Solve()
-          .ToConsole("Day 8B");
-
-      ProblemFactory.Create<Day9A>()
+            ProblemFactory.Create<Day9A>()
           .SendToClipboard()
           .AppendTime()
           .Solve()
           .ToConsole("Day 9A");
+
 
       ProblemFactory.Create<Day9B>()
           .SendToClipboard()
@@ -125,11 +123,17 @@ namespace AdventOfCode
           .Solve()
           .ToConsole("Day 9B");
 
+            // */
+
+
       ProblemFactory.Create<Day10A>()
           .SendToClipboard()
           .AppendTime()
           .Solve()
           .ToConsole("Day 10A");
+
+            /** /
+
 
       ProblemFactory.Create<Day10B>()
           .SendToClipboard()

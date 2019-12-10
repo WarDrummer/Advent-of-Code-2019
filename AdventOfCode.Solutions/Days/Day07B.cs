@@ -7,8 +7,8 @@ namespace AdventOfCode.Solutions.Days
     {
         public override string Solve()
         {
-            var data = _parser.GetData().Split(',').Select(int.Parse).ToArray();
-            var max = int.MinValue;
+            var data = _parser.GetData().Split(',').Select(long.Parse).ToArray();
+            long max = int.MinValue;
 
             foreach (var phaseSetting in EnumeratePhaseSettings(5,9))
             {
@@ -20,7 +20,7 @@ namespace AdventOfCode.Solutions.Days
                     new Amplifier(data.ToList(), phaseSetting[4]),
                 };
 
-                var input = 0;
+                long input = 0;
                 while (!amplifiers[4].IsHalted)
                 {
                     foreach (var amp in amplifiers)

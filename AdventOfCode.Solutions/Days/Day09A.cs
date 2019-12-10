@@ -1,5 +1,7 @@
 ﻿using AdventOfCode.Solutions.Parsers;
 using AdventOfCode.Solutions.Problem;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventOfCode.Solutions.Days
 {
@@ -15,9 +17,14 @@ namespace AdventOfCode.Solutions.Days
       
         public virtual string Solve()
         {
-            var input = _parser.GetData();
+            var data = _parser.GetData().Split(',').Select(long.Parse).ToArray();
 
-            return "Unsolved";
+            var input = 1;
+            var program = data.ToList();
+            var amp = new Amplifier(program, input);
+            amp.Compute();
+
+            return amp.Output.ToString();
         }
     }
 }
