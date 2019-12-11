@@ -126,20 +126,22 @@ namespace AdventOfCode
             // */
 
 
-      ProblemFactory.Create<Day10A>()
+            ProblemFactory.Create<Day10A>()
           .SendToClipboard()
           .AppendTime()
           .Solve()
           .ToConsole("Day 10A");
 
+
+
+
+
+            ProblemFactory.Create<Day10B>()
+                .SendToClipboard()
+                .AppendTime()
+                .Solve()
+                .ToConsole("Day 10B");
             /** /
-
-
-      ProblemFactory.Create<Day10B>()
-          .SendToClipboard()
-          .AppendTime()
-          .Solve()
-          .ToConsole("Day 10B");
 
       ProblemFactory.Create<Day11A>()
           .SendToClipboard()

@@ -88,9 +88,24 @@ namespace AdventOfCode.Solutions.Days
             Y = y;
         }
 
+        public bool IsEquivalent(Point p)
+        {
+            return X == p.X && Y == p.Y;
+        }
+
+        public int GetDistanceTo(Point p)
+        {
+            return Math.Abs(p.X - X) + Math.Abs(p.Y - Y);
+        }
+
+        public override int GetHashCode()
+        {
+            return $"{X},{Y}".GetHashCode();
+        }
+
         public override string ToString()
         {
-            return $"{X}, {Y}";
+            return $"({X},{Y})";
         }
     }
 }
