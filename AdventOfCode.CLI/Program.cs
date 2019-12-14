@@ -96,7 +96,6 @@ namespace AdventOfCode
           .Solve()
           .ToConsole("Day 7B");
 
-
             ProblemFactory.Create<Day8A>()
                 .SendToClipboard()
                 .AppendTime()
@@ -116,12 +115,11 @@ namespace AdventOfCode
           .Solve()
           .ToConsole("Day 9A");
 
-
-      ProblemFactory.Create<Day9B>()
-          .SendToClipboard()
-          .AppendTime()
-          .Solve()
-          .ToConsole("Day 9B");
+            ProblemFactory.Create<Day9B>()
+                .SendToClipboard()
+                .AppendTime()
+                .Solve()
+                .ToConsole("Day 9B");
 
             ProblemFactory.Create<Day10A>()
           .SendToClipboard()
@@ -135,47 +133,45 @@ namespace AdventOfCode
                 .Solve()
                 .ToConsole("Day 10B");
 
+            ProblemFactory.Create<Day11A>()
+                .SendToClipboard()
+                .AppendTime()
+                .Solve()
+                .ToConsole("Day 11A");
+
+            ProblemFactory.Create<Day11B>()
+                .SendToClipboard()
+                .AppendTime()
+                .Solve()
+                .ToConsole("Day 11B");
             // */
 
+            //ProblemFactory.Create<Day12A>()
+            //    .SendToClipboard()
+            //    .AppendTime()
+            //    .Solve()
+            //    .ToConsole("Day 12A");
 
-      ProblemFactory.Create<Day11A>()
-          .SendToClipboard()
-          .AppendTime()
-          .Solve()
-          .ToConsole("Day 11A");
+            //ProblemFactory.Create<Day12B>()
+            //    .SendToClipboard()
+            //    .AppendTime()
+            //    .Solve()
+            //    .ToConsole("Day 12B");
 
-      ProblemFactory.Create<Day11B>()
-          .SendToClipboard()
-          .AppendTime()
-          .Solve()
-          .ToConsole("Day 11B");
+            ProblemFactory.Create<Day13A>()
+                .SendToClipboard()
+                .AppendTime()
+                .Solve()
+                .ToConsole("Day 13A");
+
+            ProblemFactory.Create<Day13B>()
+                .SendToClipboard()
+                .AppendTime()
+                .Solve()
+                .ToConsole("Day 13B");
 
             /** /
 
-
-      ProblemFactory.Create<Day12A>()
-          .SendToClipboard()
-          .AppendTime()
-          .Solve()
-          .ToConsole("Day 12A");
-
-      ProblemFactory.Create<Day12B>()
-          .SendToClipboard()
-          .AppendTime()
-          .Solve()
-          .ToConsole("Day 12B");
-
-      ProblemFactory.Create<Day13A>()
-          .SendToClipboard()
-          .AppendTime()
-          .Solve()
-          .ToConsole("Day 13A");
-
-      ProblemFactory.Create<Day13B>()
-          .SendToClipboard()
-          .AppendTime()
-          .Solve()
-          .ToConsole("Day 13B");
 
 
       ProblemFactory.Create<Day14A>()

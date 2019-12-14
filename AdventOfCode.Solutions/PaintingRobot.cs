@@ -115,12 +115,11 @@ namespace AdventOfCode.Solutions.Days
                 {
                     var pt = new Point(x, y);
                     var color = hull.ContainsKey(pt) ? hull[pt] : 0;
-                    sb.Append((color == 1) ? '#': ' ');
+                    sb.Append((color == 1) ? '▒' : ' ');
                 }
                 sb.AppendLine();
             }
             return sb.ToString();
         }
-
     }
 }

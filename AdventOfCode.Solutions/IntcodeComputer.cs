@@ -20,6 +20,9 @@ namespace AdventOfCode.Solutions
         public delegate void OnOutput(long output);
         public event OnOutput OnOuput;
 
+        public delegate int OnInput();
+        public event OnInput OnInputRead;
+
         private readonly Dictionary<long, long> program = new Dictionary<long, long>();
         public long IP { get; set; }
 
@@ -79,7 +82,8 @@ namespace AdventOfCode.Solutions
                     case INPUT:
                         if (input.Count > 0)
                         {
-                            program[GetOutputParameter(program, IP, 1)] = input.Dequeue();
+                            var in0 = OnInputRead == null ? input.Dequeue() : OnInputRead.Invoke();
+                            program[GetOutputParameter(program, IP, 1)] = in0;
                             IP += 2;
                         }
                         else
@@ -131,6 +135,11 @@ namespace AdventOfCode.Solutions
         public void SetInput(long input)
         {
             this.input.Enqueue(input);
+        }
+
+        public void OverrideInput(long input)
+        {
+            this.input = new Queue<long>(new long[] {input});
         }
 
         private void GetInput(Dictionary<long, long> program, long ip, out long in1)
@@ -228,15 +237,6 @@ namespace AdventOfCode.Solutions
 
                     value = idx2;
                     break;
-                //case 1:
-                //    idx1 = ip + paramNumber;
-                //    if (!program.ContainsKey(idx1))
-                //        program[idx1] = 0;
-
-                //    Debug.Assert(idx1 >= 0);
-
-                //    value = program[idx1];
-                //    break;
                 case 2:
                     idx1 = ip + paramNumber;
                     if (!program.ContainsKey(idx1))

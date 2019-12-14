@@ -1,11 +1,12 @@
 ﻿using AdventOfCode.Solutions.Parsers;
 using AdventOfCode.Solutions.Problem;
+using System.Linq;
 
 namespace AdventOfCode.Solutions.Days
 {
-    using ParserType = MultiLineStringParser;
+    using ParserType = SingleLineStringParser;
 
-    public class Day13A : IProblem
+    public partial class Day13A : IProblem
     {
         protected readonly ParserType Parser;
 
@@ -15,9 +16,12 @@ namespace AdventOfCode.Solutions.Days
 
         public virtual string Solve()
         {
-            var input = Parser.GetData();
+            var program = Parser.GetData().Split(',').Select(long.Parse).ToList();
 
-            return "Unsolved";
+            var arcade = new ArcadeGame(program);
+            arcade.Go();
+
+            return arcade.BlockTileCount.ToString();
         }
     }
 }

@@ -1,12 +1,18 @@
-﻿namespace AdventOfCode.Solutions.Days
+﻿using System.Linq;
+
+namespace AdventOfCode.Solutions.Days
 {
     public class Day13B : Day13A
     {
         public override string Solve()
         {
-            var input = Parser.GetData();
+            var program = Parser.GetData().Split(',').Select(long.Parse).ToList();
 
-            return "Unsolved";
+            program[0] = 2;
+            var arcade = new ArcadeGame(program, true);
+            arcade.Go();
+
+            return arcade.Score.ToString();
         }
     }
 }

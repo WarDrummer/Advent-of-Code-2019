@@ -44,7 +44,7 @@ namespace AdventOfCode.Solutions.Days
             {
                 var sb = new StringBuilder();
                 for (var x = 0; x < 25; x++)
-                    sb.Append(output[y][x] == BLACK ? ' ' : '+');
+                    sb.Append(output[y][x] == BLACK ? ' ' : '▒');
 
                 result.AppendLine(sb.ToString());
             }

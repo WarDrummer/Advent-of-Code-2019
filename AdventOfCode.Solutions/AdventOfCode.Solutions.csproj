@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArcadeGame.cs" />
     <Compile Include="PaintingRobot.cs" />
     <Compile Include="IntcodeComputer.cs" />
     <Compile Include="Coordinates\AxialHexCoordinate.cs" />
