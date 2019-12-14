@@ -43,13 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Amplifier.cs" />
+    <Compile Include="PaintingRobot.cs" />
+    <Compile Include="IntcodeComputer.cs" />
     <Compile Include="Coordinates\AxialHexCoordinate.cs" />
     <Compile Include="Coordinates\CubeHexCoordinate.cs" />
     <Compile Include="Days\Day01A.cs" />
     <Compile Include="Days\Day01B.cs" />
     <Compile Include="DoublyLinkedNode.cs" />
-    <Compile Include="IntcodeComputer.cs" />
+    <Compile Include="IntcodeProcessor.cs" />
     <Compile Include="Particle.cs" />
     <Compile Include="Vector3.cs" />
     <Compile Include="Extensions\MatrixExtensions.cs" />

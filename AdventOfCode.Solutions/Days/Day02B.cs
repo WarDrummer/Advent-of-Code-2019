@@ -19,7 +19,7 @@ namespace AdventOfCode.Solutions.Days
                     program[1] = noun;
                     program[2] = verb;
 
-                    var output = IntcodeComputer.Compute(program);
+                    var output = IntcodeProcessor.Compute(program);
 
                     if (program[0] == 19690720L)
                     {

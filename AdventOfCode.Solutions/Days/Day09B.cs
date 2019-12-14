@@ -10,7 +10,7 @@ namespace AdventOfCode.Solutions.Days
 
             var input = 2;
             var program = data.ToList();
-            var amp = new Amplifier(program, input);
+            var amp = new IntcodeComputer(program, input);
             amp.Compute();
 
             return amp.Output.ToString();

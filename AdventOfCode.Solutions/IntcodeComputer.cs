@@ -1,105 +1,263 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace AdventOfCode.Solutions
 {
-    public static class IntcodeComputer
+    public class IntcodeComputer
     {
-        private const int ADD = 1;
-        private const int MULTIPLY = 2;
-        private const int INPUT = 3;
-        private const int OUTPUT = 4;
-        private const int JUMP_IF_TRUE = 5;
-        private const int JUMP_IF_FALSE = 6;
-        private const int LESS_THAN = 7;
-        private const int EQUALS = 8;
-        private const int HALT = 99;
+        private const long ADD = 1;
+        private const long MULTIPLY = 2;
+        private const long INPUT = 3;
+        private const long OUTPUT = 4;
+        private const long JUMP_IF_TRUE = 5;
+        private const long JUMP_IF_FALSE = 6;
+        private const long LESS_THAN = 7;
+        private const long EQUALS = 8;
+        private const long SET_RELATIVE_BASE = 9;
+        private const long HALT = 99;
 
-        public static int Compute(List<int> program, int input = 1, int? phase = null)
-        {
-            var output = 0;
-            var ip = 0;
-            var halted = false;
-            int in1, in2;
+        public delegate void OnOutput(long output);
+        public event OnOutput OnOuput;
 
-            while (!halted)
+        private readonly Dictionary<long, long> program = new Dictionary<long, long>();
+        public long IP { get; set; }
+
+        private Queue<long> input = new Queue<long>();
+
+
+        private long _output;
+        public long Output {
+            get
             {
-               // Console.WriteLine($"Executing IP={ip}, OpCode={program[ip]}");
-                var opcode = program[ip] % 100;
+                return _output; 
+            } 
+            set {
+                _output = value;
+                OnOuput?.Invoke(_output);
+            } 
+        }
+
+
+        public long RelativeBase { get; set; }
+        public bool IsHalted { get; set; }
+        public bool IsWaiting { get; set; }
+
+        public IntcodeComputer(List<long> program, long? startingInput = null)
+        {
+            var idx = 0;
+            foreach(var v in program)
+            {
+                this.program.Add(idx++, v);
+            }
+            input = new Queue<long>();
+            if(startingInput != null)
+                input.Enqueue(startingInput.Value);
+        }
+
+        public void Compute()
+        {
+            long in1, in2;
+            IsWaiting = false;
+
+            while (!IsHalted && !IsWaiting)
+            {
+                var opcode = program[IP] % 100;
 
                 switch (opcode)
                 {
                     case ADD:
-                        GetInput(program, ip, out in1, out in2);
-                        program[program[ip + 3]] = in1 + in2;
-                        ip += 4;
+                        GetInput(program, IP, out in1, out in2);
+                        program[GetOutputParameter(program, IP, 3)] = in1 + in2;
+                        IP += 4;
                         break;
                     case MULTIPLY:
-                        GetInput(program, ip, out in1, out in2);
-                        program[program[ip + 3]] = in1 * in2;
-                        ip += 4;
+                        GetInput(program, IP, out in1, out in2);
+                        program[GetOutputParameter(program, IP, 3)] = in1 * in2;
+                        IP += 4;
                         break;
                     case INPUT:
-                        if (phase != null)
+                        if (input.Count > 0)
                         {
-                            program[program[ip + 1]] = phase.Value;
-                            phase = null;
+                            program[GetOutputParameter(program, IP, 1)] = input.Dequeue();
+                            IP += 2;
                         }
                         else
-                            program[program[ip + 1]] = input;
-                        ip += 2;
+                        {
+                            IsWaiting = true;
+                        }
                         break;
                     case OUTPUT:
-                        GetInput(program, ip, out in1);
-                        output = in1;
-                        ip += 2;
+                        GetInput(program, IP, out in1);
+                        Output = in1;
+                        IP += 2;
                         break;
                     case JUMP_IF_TRUE:
-                        GetInput(program, ip, out in1, out in2);
+                        GetInput(program, IP, out in1, out in2);
                         if (in1 != 0)
-                            ip = in2;
-                        else ip += 3;
+                            IP = in2;
+                        else IP += 3;
                         break;
                     case JUMP_IF_FALSE:
-                        GetInput(program, ip, out in1, out in2);
+                        GetInput(program, IP, out in1, out in2);
                         if (in1 == 0)
-                            ip = in2;
-                        else ip += 3;
+                            IP = in2;
+                        else IP += 3;
                         break;
                     case LESS_THAN:
-                        GetInput(program, ip, out in1, out in2);
-                        program[program[ip + 3]] = (in1 < in2) ? 1 : 0;
-                        ip += 4;
+                        GetInput(program, IP, out in1, out in2);
+                        program[GetOutputParameter(program, IP, 3)] = (in1 < in2) ? 1 : 0;
+                        IP += 4;
                         break;
                     case EQUALS:
-                        GetInput(program, ip, out in1, out in2);
-                        program[program[ip + 3]] = (in1 == in2) ? 1 : 0;
-                        ip += 4;
+                        GetInput(program, IP, out in1, out in2);
+                        program[GetOutputParameter(program, IP, 3)] = (in1 == in2) ? 1 : 0;
+                        IP += 4;
+                        break;
+                    case SET_RELATIVE_BASE:
+                        GetInput(program, IP, out in1);
+                        RelativeBase += in1;
+                        IP += 2;
                         break;
                     case HALT:
-                        halted = true;
+                        IsHalted = true;
                         break;
                     default:
-                        throw new Exception($"Unrecognized OpCode {program[ip]} @ IP={ip}");
+                        throw new Exception($"Unrecognized OpCode {program[IP]} @ IP={IP}");
                 }
             }
-
-            return output;
         }
 
-        private static void GetInput(List<int> program, int ip, out int in1)
+        public void SetInput(long input)
         {
-            var s = program[ip].ToString();
-            var len = s.Length;
-            in1 = s.Length > 2 && s[len - 3] == '1' ? program[ip + 1] : program[program[ip + 1]];
+            this.input.Enqueue(input);
         }
 
-        private static void GetInput(List<int> program, int ip, out int in1, out int in2)
+        private void GetInput(Dictionary<long, long> program, long ip, out long in1)
         {
-            var s = program[ip].ToString();
+            in1 = GetParameterValue(program, ip, 1);
+        }
+
+        private void GetInput(Dictionary<long, long> program, long ip, out long in1, out long in2)
+        {
+            in1 = GetParameterValue(program, ip, 1);
+            in2 = GetParameterValue(program, ip, 2);
+        }
+
+        private static long GetParameterMode(long opcode, int paramNumber)
+        {
+            var s = opcode.ToString();
             var len = s.Length;
-            in1 = s.Length > 2 && s[len - 3] == '1' ? program[ip + 1] : program[program[ip + 1]];
-            in2 = s.Length > 3 && s[len - 4] == '1' ? program[ip + 2] : program[program[ip + 2]];
+            var mode = 0;
+            if(s.Length > paramNumber + 1)
+                mode = s[len - 2 - paramNumber] - '0';
+            return mode;
+        }
+
+        private long GetParameterValue(Dictionary<long, long> program, long ip, int paramNumber)
+        {
+            var mode = GetParameterMode(program[ip], paramNumber);
+            long value, idx1, idx2;
+            switch (mode)
+            {
+                case 0:
+                    idx1 = ip + paramNumber;
+                    if (!program.ContainsKey(idx1))
+                        program[idx1] = 0;
+
+                    Debug.Assert(idx1 >= 0);
+
+                    idx2 = program[idx1];
+                    if (!program.ContainsKey(idx2))
+                        program[idx2] = 0;
+
+                    Debug.Assert(idx2 >= 0);
+
+                    value = program[idx2];
+                    break;
+                case 1:
+                    idx1 = ip + paramNumber;
+                    if (!program.ContainsKey(idx1))
+                        program[idx1] = 0;
+
+                    Debug.Assert(idx1 >= 0);
+
+                    value = program[idx1];
+                    break;
+                case 2:
+                    idx1 = ip + paramNumber;
+                    if (!program.ContainsKey(idx1))
+                        program[idx1] = 0;
+
+                    Debug.Assert(idx1 >= 0);
+
+                    idx2 = program[idx1] + RelativeBase;
+                    if (!program.ContainsKey(idx2))
+                        program[idx2] = 0;
+
+                    Debug.Assert(idx2 >= 0);
+
+                    value = program[idx2];
+                    break;
+                default:
+                    throw new Exception($"Unrecognized parameter mode: {mode}");
+            }
+
+            return value;
+        }
+
+        private long GetOutputParameter(Dictionary<long, long> program, long ip, int paramNumber)
+        {
+            var mode = GetParameterMode(program[ip], paramNumber);
+            long value, idx1, idx2;
+            switch (mode)
+            {
+                case 0:
+                case 1:
+                    idx1 = ip + paramNumber;
+                    if (!program.ContainsKey(idx1))
+                        program[idx1] = 0;
+
+                    Debug.Assert(idx1 >= 0);
+
+                    idx2 = program[idx1];
+                    if (!program.ContainsKey(idx2))
+                        program[idx2] = 0;
+
+                    Debug.Assert(idx2 >= 0);
+
+                    value = idx2;
+                    break;
+                //case 1:
+                //    idx1 = ip + paramNumber;
+                //    if (!program.ContainsKey(idx1))
+                //        program[idx1] = 0;
+
+                //    Debug.Assert(idx1 >= 0);
+
+                //    value = program[idx1];
+                //    break;
+                case 2:
+                    idx1 = ip + paramNumber;
+                    if (!program.ContainsKey(idx1))
+                        program[idx1] = 0;
+
+                    Debug.Assert(idx1 >= 0);
+
+                    idx2 = program[idx1] + RelativeBase;
+                    if (!program.ContainsKey(idx2))
+                        program[idx2] = 0;
+
+                    Debug.Assert(idx2 >= 0);
+
+                    value = idx2;
+                    break;
+                default:
+                    throw new Exception($"Unrecognized parameter mode: {mode}");
+            }
+
+            return value;
         }
     }
 }
+

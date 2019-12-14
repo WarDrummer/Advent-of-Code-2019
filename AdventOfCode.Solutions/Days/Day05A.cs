@@ -18,7 +18,7 @@ namespace AdventOfCode.Solutions.Days
         {
             var program = _parser.GetData().Split(',').Select(int.Parse).ToList();
 
-            var output = IntcodeComputer.Compute(program, 1);
+            var output = IntcodeProcessor.Compute(program, 1);
 
             return output.ToString();
         }

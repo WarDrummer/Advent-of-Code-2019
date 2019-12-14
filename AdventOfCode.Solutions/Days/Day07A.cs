@@ -30,7 +30,7 @@ namespace AdventOfCode.Solutions.Days
                 for (var i = 0; i < 5; i++)
                 {
                     program = data.ToList();
-                    output = IntcodeComputer.Compute(program, input, phaseSetting[i]);
+                    output = IntcodeProcessor.Compute(program, input, phaseSetting[i]);
                     input = output;
                 }
 

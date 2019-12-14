@@ -23,7 +23,7 @@ namespace AdventOfCode.Solutions.Days
             program[1] = noun;
             program[2] = verb;
 
-            var output = IntcodeComputer.Compute(program, 1);
+            var output = IntcodeProcessor.Compute(program, 1);
 
             return program[0].ToString();
         }

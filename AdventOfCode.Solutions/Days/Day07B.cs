@@ -12,12 +12,12 @@ namespace AdventOfCode.Solutions.Days
 
             foreach (var phaseSetting in EnumeratePhaseSettings(5,9))
             {
-                Amplifier[] amplifiers = {
-                    new Amplifier(data.ToList(), phaseSetting[0]),
-                    new Amplifier(data.ToList(), phaseSetting[1]),
-                    new Amplifier(data.ToList(), phaseSetting[2]),
-                    new Amplifier(data.ToList(), phaseSetting[3]),
-                    new Amplifier(data.ToList(), phaseSetting[4]),
+                IntcodeComputer[] amplifiers = {
+                    new IntcodeComputer(data.ToList(), phaseSetting[0]),
+                    new IntcodeComputer(data.ToList(), phaseSetting[1]),
+                    new IntcodeComputer(data.ToList(), phaseSetting[2]),
+                    new IntcodeComputer(data.ToList(), phaseSetting[3]),
+                    new IntcodeComputer(data.ToList(), phaseSetting[4]),
                 };
 
                 long input = 0;
